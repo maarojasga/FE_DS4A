@@ -101,7 +101,7 @@ def app():
 
 
     c3.write('### Tipo gráfico')
-    display_options = c3.multiselect()
+    #display_options = c3.multiselect()
 
     
     #Button to print
