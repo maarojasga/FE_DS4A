@@ -62,7 +62,7 @@ def app():
         update = True
 
 
-
+    
     df = read_data()
     df['date'] = df['Fecha'].dt.date #adding date column (temporal)
 
