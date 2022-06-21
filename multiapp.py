@@ -17,7 +17,7 @@ class MultiApp:
     def run(self):
         st.set_page_config(page_title='DS4A', layout="wide",page_icon=Image.open('images/ave.png'))
         st.sidebar.title('Acoustic biodiversity monitoring')
-        app= st.sidebar.selectbox(
+        app= st.sidebar.radio(
             '',
             self.apps,
             format_func = lambda app: app['Titulo']

@@ -12,8 +12,6 @@ def app():
     plt.style.use('ggplot')
     plt.style.use('dark_background')
 
-    @st.cache
-    @st.cache(allow_output_mutation=True)#temporal
     def read_data():
         df = pd.read_csv('data/FrontEnd_Part1.csv')
         df['Fecha'] = pd.to_datetime(df['Fecha'])
@@ -53,62 +51,82 @@ def app():
             return df_filter
         
         else: return df
+
+    def linep(data):
+        return st.line_chart(data)
+
+
+    def barp(data):
+        return st.bar_chart(data)
+
         
-
-    #    return df
-
-
     def update():
         update = True
 
 
-    
+
+
+
+
     df = read_data()
     df['date'] = df['Fecha'].dt.date #adding date column (temporal)
+
+
+
+
 
     #set columns
     c1, c2, c3 = st.columns(3)
 
     #column 1 config
-    c1.write('### Rango de fechas')
-    initial_date = c1.date_input('Fecha de inicio', datetime.date(2021, 11, 1))
-    final_date = c1.date_input('Fecha final', datetime.date(2021, 12, 30))
+    c1.write('### Date')
+    initial_date = c1.date_input('Start date', datetime.date(2021, 11, 1))
+    final_date = c1.date_input('End date', datetime.date(2021, 12, 30))
 
-    c1.write('### Rango de hora')
+    c1.write('### Hour')
     hr = list(range(24))
-    start_hr, end_hr = c1.select_slider('Hora', options=hr, value=[0,23])
+    start_hr, end_hr = c1.select_slider('Time', options=hr, value=[0,23])
 
 
     #column 2 config
-    c2.write('### Grupo')
+    c2.write('### Group')
     tipo = c2.radio( 'Tipo', ['Todos']+list(set(df['parent label'])))
 
     #column 3 config
-    c3.write('### Ver datos como')
+    c3.write('### Vew data as')
 
     key_list = list(df.keys()) #Lista de columnas
     cath_keys = ['label','date','sensor_name', 'hour','parent label'] #Columnas con variables categoricas
     cont_keys = ['max_f','max_t', 'min_f', 'min_t', 'latitud', 'longitud']#Columnas con variables continuas
 
     group_options = c3.multiselect(
-        'Agrupar elementos por:',
+        'Group by:',
         cath_keys
     )
 
     
+    measure_options = ['Size', 'Mean', 'Max value', 'Min value']
 
-    #c3.write('### Calcular')
+    c3.write('### Visualize')
+    vew_options = c3.multiselect(
+        'Data to view:',
+        cont_keys
+    )
 
 
-    c3.write('### Tipo gráfico')
-    #display_options = c3.multiselect()
+    measurements = c3.multiselect(
+        'Measurement:',
+        measure_options
+    )
 
-    
-    #Button to print
-    #filtrar = st.button('Filtrar')
+
+    st.write('### Plot')
+    display_options = ['Bar', 'Line']
+    display = st.multiselect('Select plot style', display_options)
     
 
     if update:
+
         df_filter = df.copy()
 
         #Filter parent label
@@ -123,7 +141,12 @@ def app():
         #Group data
         df_filter = group_data(df_filter, group_options)
 
-        #st.write(group_options)
+        if group_options:
 
-        st.dataframe(df_filter)
+            if 'Line' in display: linep(df_filter)
+            if 'Bar' in display: barp(df_filter)
+            
+
+
+        #st.dataframe(df_filter)
         update = False
