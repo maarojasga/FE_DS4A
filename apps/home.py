@@ -5,8 +5,8 @@ from pydub import AudioSegment
 def app():
     st.write(
         """
-        # Acoustic biodiversity monitoring
-        #
+        # Monitoreo acústico de biodiversidad
+        
         """
     )
     st.write("## Suba el archivo de audio correspondiente")
