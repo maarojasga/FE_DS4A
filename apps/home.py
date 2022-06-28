@@ -9,12 +9,12 @@ def app():
         #
         """
     )
-    st.write("## Upload your track to analyze")
+    st.write("## Suba el archivo de audio correspondiente")
     uploaded_file = st.file_uploader("Seleccione archivo")
     if uploaded_file is not None:
         audio_bytes = uploaded_file.read()
         st.audio(audio_bytes, format='audio/mp3')
-    
+
 
     #image = Image.open('images/amazonia-1.jpg')
 
