@@ -10,7 +10,7 @@ def app():
         """
     )
     st.write("## Upload your track to analyze")
-    uploaded_file = st.file_uploader("Select file")
+    uploaded_file = st.file_uploader("Seleccione archivo")
     if uploaded_file is not None:
         audio_bytes = uploaded_file.read()
         st.audio(audio_bytes, format='audio/mp3')
