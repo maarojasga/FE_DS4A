@@ -1,0 +1,3 @@
+#!C:\Users\pipek\OneDrive\Documentos\code_folder\DS4A\FE_DS4A\env\Scripts\python.exe
+from numba.pycc import main
+main()
