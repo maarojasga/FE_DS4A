@@ -9,7 +9,7 @@ def app():
     st.write(
         """
         # Acoustic biodiversity monitoring
-        # Magdalena
+        #
         """
     )
     image = Image.open('images/amazonia-1.jpg')
