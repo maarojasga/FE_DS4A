@@ -10,14 +10,20 @@ import matplotlib as mpl
 import plotly.express as px
 
 
+
 def app():
     plt.style.use('default')
+
     st.write(
         """
         # Acoustic biodiversity monitoring
         #
         """
     )
+    image = Image.open('images/amazonia-1.jpg')
+    st.image(image, caption='Amazonas')
+
+
     st.write("## Upload your track to analyze")
     uploaded_file = st.file_uploader("Select file")
     if uploaded_file is not None:
@@ -86,3 +92,4 @@ def plot_wave(y, sr):
     fig, ax = plt.subplots(figsize=(7,4))
     img = librosa.display.waveshow(y, sr=sr, x_axis="time", ax=ax)
     return plt.gcf()
+

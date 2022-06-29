@@ -107,8 +107,8 @@ def app():
     fecha_final = c1.date_input('Fecha final', datetime.date(2021, 12, 30))
     c2.write('### Filtros')
     tipo = c2.radio( 'Tipo', ['Todos']+list(set(df['parent label'])))
-    c3.write('### Sensor')
-    sensor = c3.multiselect('Nombre del sensor', ['Seleccionar']+list(set(df['name'])))
+    #c3.write('### Sensor')
+    #sensor = c3.multiselect('Nombre del sensor', ['Seleccionar']+list(set(df['name'])))
     seguir = c1.checkbox('Filtrar')
     st.write('--------------')
 
