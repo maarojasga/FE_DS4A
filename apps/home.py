@@ -19,7 +19,7 @@ def app():
         """
     )
     st.write("## Upload your track to analyze")
-    uploaded_file = st.file_uploader("Select file")
+    uploaded_file = st.file_uploader("Select file",type="wav")
     if uploaded_file is not None:
         named_colorscales = plt.colormaps()
         default_ix = default_ix = named_colorscales.index('viridis')
