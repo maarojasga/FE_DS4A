@@ -8,13 +8,13 @@ import plotly.express as px
 def app():
     plt.style.use('ggplot')
     plt.style.use('dark_background')
-    #colors={:"green","":"purple","Anthro"}
     color_discrete_map = {'geophony': '#2E75B6', "biophony": '#A9D18E', 'anthrophony': '#FFD966',"Other":"#F4B183"}
     df = pd.read_csv('data/Labeled Metatabla.csv')
     df['date'] = pd.to_datetime(df['date'])
-
+    
     def mapa(df):
-        fig2 = px.scatter_mapbox(df, lat="decimalLat", lon="decimalLon", hover_name="sensor_name", hover_data=["grand_label", "time"],
+        fig2 = px.scatter_mapbox(df, lat="decimalLat", lon="decimalLon", hover_name="sensor_name", 
+                        hover_data=["grand_label", "BI","NP","ACI","NDSI","ADI","H","Ht","Hf","SC"],
                         color_discrete_map=color_discrete_map,color="grand_label", zoom=9, width=800)
         fig2.update_layout(mapbox_style="open-street-map")
 
@@ -52,10 +52,7 @@ def app():
        df_geo = transf_geo()
 
 
-
     st.write('# Filters')
-
-    
     c1, c2, c3 = st.columns(3)
     c1.write('### Dates')
     fecha_inicial = c1.date_input('Start date', datetime.date(2021, 11, 1))
@@ -64,6 +61,8 @@ def app():
     tipo = c2.radio( 'Tipo', ['All']+list(set(df['grand_label'])))
     #c3.write('### Sensor')
     #sensor = c3.multiselect('Nombre del sensor', ['Seleccionar']+list(set(df['name'])))
+    with c3:
+        st.download_button("Download file",data=pd.DataFrame.to_csv(df,index=False))
     seguir = c1.checkbox('Filter')
     st.write('--------------')
 
