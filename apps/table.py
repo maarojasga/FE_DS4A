@@ -96,9 +96,9 @@ def app():
     #c3.write('### Calcular')
 
 
-    c3.write('### Tipo gráfico')
-    display_options = ['bar', 'cake', 'line', 'hist']
-    display = c3.multiselect('Selecciona los gráficos que deseas visualizar', display_options)
+    #c3.write('### Tipo gráfico')
+    #display_options = ['bar', 'cake', 'line', 'hist']
+    #display = c3.multiselect('Selecciona los gráficos que deseas visualizar', display_options)
 
     
     #Button to print
