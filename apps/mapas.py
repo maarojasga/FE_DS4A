@@ -11,15 +11,17 @@ def app():
     color_discrete_map = {'geophony': '#2E75B6', "biophony": '#A9D18E', 'anthrophony': '#FFD966',"Other":"#F4B183"}
     df = pd.read_csv('data/Labeled Metatabla.csv')
     df['date'] = pd.to_datetime(df['date'])
+    df=df.rename(columns={"decimalLat":"Latitud","decimalLon":"Longitud"})
     
     def mapa(df):
-        fig2 = px.scatter_mapbox(df, lat="decimalLat", lon="decimalLon", hover_name="sensor_name", 
-                        hover_data=["grand_label", "BI","NP","ACI","NDSI","ADI","H","Ht","Hf","SC"],
+        fig2 = px.scatter_mapbox(df, lat="Latitud", lon="Longitud", hover_name="grand_label", 
+                        hover_data={"sensor_name":True, "Latitud":False,"Longitud":False,"grand_label":False,
+                                    "BI":':.2f',"NP":':.2f',"ACI":':.2f',"NDSI":':.2f',"ADI":':.2f',"H":':.2f',"Ht":':.2f',"Hf":':.2f',"SC":':.2f'},
                         color_discrete_map=color_discrete_map,color="grand_label", zoom=9, width=800)
         fig2.update_layout(mapbox_style="open-street-map")
 
-        fig2.update_layout(margin={"r":0,"t":50,"l":0,"b":50})
-
+        fig2.update_layout(margin={"r":0,"t":50,"l":0,"b":50},hovermode='x unified',hoverlabel_align = 'right')
+        #fig.update_layout(hovermode='x unified')
         fig2.update_coloraxes(showscale=False)
         c1.plotly_chart(fig2)
 
