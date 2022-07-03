@@ -11,6 +11,12 @@ import plotly.express as px
 from maad import sound, features, util
 import pandas as pd
 
+#from st_aggrid.grid_options_builder import GridOptionsBuilder
+#from st_aggrid import AgGrid
+
+#import plotly.graph_objects as go
+#import plotly.io as pio
+
 def app():
     plt.style.use('default')
 
@@ -70,18 +76,52 @@ def app():
             #st.pyplot(plot_wave(y, sr))
 
         with col3:
+
             st.markdown(
             f"<h4 style='text-align: left; color: black;'>Acoustic Indices</h5>",
             unsafe_allow_html=True,
-        )
-            st.table(df_indices_file)
-        #nyquist_frequency = int(audio_bytes.sampling_frequency/2)
-        #maximum_frequency = st.sidebar.slider('Maximum frequency (Hz)', 5000, nyquist_frequency, 5500)
-    
+        )   
+            dfIndex=df_indices_file.reset_index()
+            #dfIndex=dfIndex.style.format({"Value":"{:.2f}"})
 
-    #image = Image.open('images/amazonia-1.jpg')
+            ttips=pd.DataFrame(data=[["Acoustic Diversity Index (ADI): Increases with greater evenness across frequency bands.",
+                                        "Highest values were from recordings with high levels of geophony or anthrophony (wind, helicopters or trucks)"],
+                                        ["Acoustic Complexity Index (ACI): Measure the difference in amplitude between one time sample and the next within a frequency band, relative to the total amplitude within that band.",
+                                        "High values indicate storms, intermittent rain drops falling from vegetation, stridulating insects, or high levels of bird activity."],
+                                        ["Normalized Difference Soundscape Index (NDSI): Relies on a theoretical frequency split between anthrophony (1–2 kHz) and biophony (2–11 kHz).",
+                                        "High values reflect high levels of insect biophony"],
+                                        ["Bioacoustic Index (BI): higher values indicate greater disparity between loudest and quietest bands.",
+                                        "Highest values produced by blanket cicada noise,Low values arise when there is no sound between 2 and 11 kHz."],
+                                        ["Frecuency entropy (Hf): a measure of acoustic energy dispersal through the spectrum","Heavy rain produces a high H[s] value"], #https://stackoverflow.com/questions/30418391/what-is-frequency-domain-entropy-in-fft-result-and-how-to-calculate-it
+                                        ["Temporal entropy (Ht): The squared amplitude values of the wave envelope normalized to unit area and treated as a probability mass function (pmf)",np.nan],
+                                        ["Acoustic entropy (H): Increases with greater evenness of amplitude among frequency bands and/or time steps.","Highest values come from near‐silent recordings, lowest values produced when insect noise dominated a single frequency band."],
+                                        ["Spectral cover (SC)",np.nan],
+                                        ["Number of peaks (NP): measure of the average number of peaks in the spectra of the frames through a recording",np.nan],
+                                        ],columns=dfIndex.columns, index=dfIndex.index)
+            dfIndexplot= dfIndex.style\
+                        .set_tooltips(ttips,props="visibility:hidden; position:absolute; background-color: #DEF3FE;font-size:12px; padding: 10px; border-radius: 7px;")\
+                        .set_table_styles([{'selector': 'th','props': [('background-color', '#add8e6')]}])\
+                        .hide_index()\
+                        .to_html()
 
-    #st.image(image, caption='Amazonas')
+            #st.dataframe(dfIndexplot)
+            st.markdown(dfIndexplot,unsafe_allow_html=True)
+            df_xlsx = to_excel(dfIndex)
+            st.download_button(label='📥 Download Indices',
+                                data=df_xlsx ,
+                                file_name= 'Acoustic Indices.xlsx')
+
+def to_excel(df):
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, index=False, sheet_name='Sheet1')
+    workbook = writer.book
+    worksheet = writer.sheets['Sheet1']
+    format1 = workbook.add_format({'num_format': '0.00'}) 
+    worksheet.set_column('A:A', None, format1)  
+    writer.save()
+    processed_data = output.getvalue()
+    return processed_data
 
 def handle_uploaded_audio_file(uploaded_file):
     a = AudioSegment.from_file(
