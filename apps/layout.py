@@ -60,6 +60,8 @@ def app():
         update = True
 
 #Plot options
+
+    #bar plot
     def bar_plot(df, var):
         update()
         c2.bar_chart(df.groupby(var).size())
@@ -142,10 +144,17 @@ def app():
     c2.write('### Plot')
     display_options = ['Bar plot', 'Histogram', 'Box plot', 'Scatter plot']
 
-    if x_option and not y_option:
-        if x_option in cath_keys: display_scenarios = ['Bar plot']
-        if x_option in cont_keys: display_scenarios = ['Histogram']
-        display = c2.multiselect('Select plot style', display_scenarios)
+    #Display logic
+
+    #Show hist and bar plots
+    if x_option:
+        if x_option in cath_keys: x_display = ['Bar plot']
+        if x_option in cont_keys: x_display = ['Histogram']
+
+    if y_option:
+        if y_option in cath_keys: y_display = ['Bar plot']
+        if y_option in cont_keys: y_display = ['Histogram']
+
 
     
 
