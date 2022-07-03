@@ -5,7 +5,7 @@ Repository created for the DS4A project
 # Steps to run app in gcloud
 
 1. Update from git to server:
-git fetch ; git pull
+cd FE_DS4A ; git fetch ; git pull
 
 2. Run venv:
 source venv/bin/activate
