@@ -99,7 +99,7 @@ def app():
                                         ["Number of peaks (NP): measure of the average number of peaks in the spectra of the frames through a recording",np.nan],
                                         ],columns=dfIndex.columns, index=dfIndex.index)
             dfIndexplot= dfIndex.style\
-                        .set_tooltips(ttips,props="visibility:hidden; position:absolute; background-color: #DEF3FE;font-size:12px; padding: 10px; border-radius: 7px;")\
+                        .set_tooltips(ttips,props="visibility:hidden; position:absolute; background-color: #DEF3FE;font-size:12px; padding: 10px; border-radius: 7px;z-index:1;")\
                         .set_table_styles([{'selector': 'th','props': [('background-color', '#add8e6')]}])\
                         .hide_index()\
                         .to_html()
