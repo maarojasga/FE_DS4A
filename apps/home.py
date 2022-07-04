@@ -58,7 +58,7 @@ def app():
         col1, col2, col3 = st.columns([1,1,1])
         with col1:
             st.markdown(
-            f"<h4 style='text-align: left; color: black;'>Original</h5>",
+            f"<h4 style='text-align: left; '>Original</h5>",
             unsafe_allow_html=True,
         )
             buf = BytesIO()
@@ -69,7 +69,7 @@ def app():
 
         with col2:
             st.markdown(
-            f"<h4 style='text-align: left; color: black;'>Wave plot </h5>",
+            f"<h4 style='text-align: left;'>Wave plot </h5>",
             unsafe_allow_html=True,
         )
             buf = BytesIO()
@@ -80,7 +80,7 @@ def app():
         with col3:
 
             st.markdown(
-            f"<h4 style='text-align: left; color: black;'>Acoustic Indices</h5>",
+            f"<h4 style='text-align: left; '>Acoustic Indices</h5>",
             unsafe_allow_html=True,
         )   
             dfIndex=df_indices_file.reset_index()
@@ -100,9 +100,10 @@ def app():
                                         ["Spectral cover (SC)",np.nan],
                                         ["Number of peaks (NP): measure of the average number of peaks in the spectra of the frames through a recording",np.nan],
                                         ],columns=dfIndex.columns, index=dfIndex.index)
-            """dfIndexplot= dfIndex.style\
+            dfIndexplot= dfIndex.style\
                         .set_tooltips(ttips,props="visibility:hidden; position:absolute; background-color: #DEF3FE;font-size:12px; padding: 10px; border-radius: 7px;z-index:1;")\
                         .set_table_styles([{'selector': 'th','props': [('background-color', '#add8e6')]}])\
+                        .format({"Value":"{:.2f}"})\
                         .hide_index()\
                         .to_html()
 
@@ -111,7 +112,7 @@ def app():
             df_xlsx = to_excel(dfIndex)
             st.download_button(label='📥 Download Indices',
                                 data=df_xlsx ,
-                                file_name= 'Acoustic Indices.xlsx')"""
+                                file_name= 'Acoustic Indices.xlsx')
             
 
         st.subheader('Classification of Audio')
@@ -166,13 +167,18 @@ def plot_transformation(y, sr, transformation_name,colours):
     S_db = librosa.amplitude_to_db(np.abs(D), ref=np.max)
     fig, ax = plt.subplots(figsize=(7,4))
     img = librosa.display.specshow(S_db, x_axis="time", y_axis="linear", ax=ax,cmap=colours)
+    fig.patch.set_facecolor('#F2F2F2')
     fig.colorbar(img, ax=ax, format="%+2.f dB")
+    
 
     return plt.gcf()
 
 def plot_wave(y, sr):
     fig, ax = plt.subplots(figsize=(7,4))
     img = librosa.display.waveshow(y, sr=sr, x_axis="time", ax=ax)
+    fig.patch.set_facecolor('#F2F2F2')
+    ax.set_facecolor('#F2F2F2')
+
     return plt.gcf()
 
 def compute_acoustic_indices(s, Sxx, tn, fn):

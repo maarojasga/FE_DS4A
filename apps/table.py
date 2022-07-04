@@ -14,6 +14,16 @@ def app():
 
     def read_data():
         df = pd.read_csv('data/Labeled Metatabla.csv')
+        del df["eventID"]
+        del df['GrupoBiolo']
+        del df['Presión sonora 1']
+        del df['Presión sonora 2']
+        del df['Presión sonora 3']
+        del df['Presión sonora 4']
+        del df['min_f']
+        del df['max_f']
+        del df['min_t']
+        del df['max_t']
         df['date'] = pd.to_datetime(df['date'])
         return df
 
@@ -77,7 +87,6 @@ def app():
     c3.write('### Vew as')
 
     key_list = [
-        'eventID',
         'sensor_name',
         'date2',
         'hour',
@@ -86,15 +95,6 @@ def app():
         'grand_label',
         'label_desc',
         'Cobertura',
-        'GrupoBiolo',
-        'Presión sonora 1',
-        'Presión sonora 2',
-        'Presión sonora 3',
-        'Presión sonora 4',
-        'min_f',
-        'max_f',
-        'min_t',
-        'max_t',
         'BI',
         'NP',
         'ACI',
@@ -107,14 +107,12 @@ def app():
     ]
 
     cath_keys = [
-        'eventID',
         'sensor_name',
         'date2',
         'hour',
         'grand_label',
         'label_desc',
         'Cobertura',
-        'GrupoBiolo',
         ] #Categorical variables columns
 
     aggregate_fns = [
