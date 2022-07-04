@@ -11,6 +11,8 @@ import plotly.express as px
 from maad import sound, features, util
 import pandas as pd
 
+from apps.classification import preprocessing_audio, classification
+
 #from st_aggrid.grid_options_builder import GridOptionsBuilder
 #from st_aggrid import AgGrid
 
@@ -98,7 +100,7 @@ def app():
                                         ["Spectral cover (SC)",np.nan],
                                         ["Number of peaks (NP): measure of the average number of peaks in the spectra of the frames through a recording",np.nan],
                                         ],columns=dfIndex.columns, index=dfIndex.index)
-            dfIndexplot= dfIndex.style\
+            """dfIndexplot= dfIndex.style\
                         .set_tooltips(ttips,props="visibility:hidden; position:absolute; background-color: #DEF3FE;font-size:12px; padding: 10px; border-radius: 7px;z-index:1;")\
                         .set_table_styles([{'selector': 'th','props': [('background-color', '#add8e6')]}])\
                         .hide_index()\
@@ -109,7 +111,30 @@ def app():
             df_xlsx = to_excel(dfIndex)
             st.download_button(label='📥 Download Indices',
                                 data=df_xlsx ,
-                                file_name= 'Acoustic Indices.xlsx')
+                                file_name= 'Acoustic Indices.xlsx')"""
+            
+
+        st.subheader('Classification of Audio')
+        st.markdown('In this section we are going to detect the presence or absence of soundscape components')
+
+        if st.button('Detect Rain'):
+            with st.spinner('Executing classifcation...'):
+
+                st.info("Extracting features...")
+
+                features = preprocessing_audio(y, sr)
+
+
+                st.info("Classifying presence or absence")
+
+                result = classification(features)
+                if result ==0:
+                    st.success('Result: Audio with rain absence')
+                else:
+                    st.success('Result: Audio with rain presence')  
+
+                st.success('Classifcation executed successfully')
+                st.balloons()
 
 def to_excel(df):
     output = BytesIO()
