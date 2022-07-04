@@ -1,4 +1,5 @@
 from cProfile import label
+from cmath import nan
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -59,13 +60,102 @@ def app():
     def update():
         update = True
 
+
 #Plot options
 
     #bar plot
     def bar_plot(df, var):
         update()
-        c2.bar_chart(df.groupby(var).size())
+        st.write('# ')
+        st.write('# ')
+        st.write('# ')
+        st.subheader('Bar plot of ' + var + ' data')
+        st.bar_chart(df.groupby(var).size())
+    
+    #histogram
+    def histogram_plot(df,var,bns):
+        update()
+        st.subheader('Histogram of ' + var + ' data')
+        hist_values = np.histogram(df[var], bins=bns,)[0]
+        st.bar_chart(hist_values)
 
+    #Scatter plot
+    def scatter_plot(df,var_x,var_y):
+        update()
+        st.subheader('Scatter plot of %s VS %s' % (var_x, var_y))
+        fig = px.scatter(
+            x = df[var_x],
+            y = df[var_y],
+        )
+        fig.update_layout(
+            xaxis_title = var_x,
+            yaxis_title = var_y,
+            width=600, height=600,
+        )
+
+        st.write(fig)
+
+    #Cont Heatmap
+    def cont_heatmap(df,var_x,var_y):
+        update()
+        st.subheader('Heatmap of %s VS %s' % (var_x, var_y))
+
+        fig = px.density_heatmap(
+            x = df[var_x],
+            y = df[var_y],
+            width=600, height=600,
+        )
+        fig.update_layout(
+            xaxis_title = var_x,
+            yaxis_title = var_y,
+        )
+
+        st.write(fig)
+
+
+    #Box plot
+    def box_plot(df,var_x,var_y):
+        update()
+        st.subheader('Box plot of %s VS %s' % (var_x, var_y))
+        fig = px.box(
+            x = df[var_x],
+            y = df[var_y],
+            width=600, height=600,
+        )
+        fig.update_layout(
+            xaxis_title = var_x,
+            yaxis_title = var_y,
+        )
+
+        st.write(fig)
+
+    #Strip plot
+
+    def strip_plot(df,var_x,var_y):
+        update()
+        st.subheader('Strip plot of %s VS %s' % (var_x, var_y))
+        fig = px.strip(
+            x = df[var_x],
+            y = df[var_y],
+            width=600, height=600,
+        )
+        fig.update_layout(
+            xaxis_title = var_x,
+            yaxis_title = var_y,
+        )
+
+        st.write(fig)
+
+    #Sunburst
+    def sunburst_plot(df,var_x,var_y):
+        update()
+        st.subheader('Sunburst plot of %s containing %s' % (var_x, var_y))
+        fig = px.sunburst(
+            df, path=[var_x,var_y],
+            width=600, height=600,
+        )
+        
+        st.write(fig)
 
     df = read_data()
 
@@ -113,11 +203,8 @@ def app():
     cont_keys = [key for key in key_list if key not in cath_keys]#Cont variables columns
 
 
-
-
-
     #set columns
-    c1, c2 = st.columns([1, 3])
+    c1, c2, c3 = st.columns([1, 2, 2])
 
     #column 1 config
     c1.write('### Set Variables')
@@ -141,25 +228,8 @@ def app():
     c1.write('### Category')
     tipo = c1.radio( 'Label', ['All']+list(set(df['grand_label'])))
 
-    c2.write('### Plot')
     display_options = ['Bar plot', 'Histogram', 'Box plot', 'Scatter plot']
 
-    #Display logic
-
-    #Show hist and bar plots
-    if x_option:
-        if x_option in cath_keys: x_display = ['Bar plot']
-        if x_option in cont_keys: x_display = ['Histogram']
-
-    if y_option:
-        if y_option in cath_keys: y_display = ['Bar plot']
-        if y_option in cont_keys: y_display = ['Histogram']
-
-
-    
-
-
-    
     
 
     if update:
@@ -175,4 +245,76 @@ def app():
         #Filter hour
         df_filter = filter_hour(df_filter, start_hr, end_hr)
 
+            #Show hist and bar plots
+        if x_option != 'None':
+            if x_option in cath_keys:
+                x_active = True
+                x_cath = True
+               
+            elif x_option in cont_keys:
+                x_active = True
+                x_cath = False
+               
+            else:
+                x_cath == nan
+            
+        else: x_active = False
+
+
+        if y_option != 'None':
+            if y_option in cath_keys:
+                y_active = True
+                y_cath = True
+
+            elif y_option in cont_keys:
+                y_active = True
+                y_cath = False
+
+            else:
+                y_cath == nan
+        else: y_active = False
+
+        with c2:
+            if x_active == True:
+                if x_cath:
+                    bar_plot(df_filter, x_option)
+
+                if x_cath==False:
+                    bnsx = st.slider('Select number of bins', 1, 50, 10,key=0)
+                    histogram_plot(df_filter,x_option,bnsx)
+            
+            #activate c1 plot 
+            if x_active and y_active:
+
+                if x_cath and y_cath:
+                    sunburst_plot(df_filter, x_option, y_option)
+
+                if not x_cath and not y_cath:
+                    scatter_plot(df_filter, x_option, y_option)
+
+                if (x_cath and not y_cath) or (y_cath and not x_cath):
+                    strip_plot(df_filter, x_option, y_option)         
+
+
+        with c3:
+            if y_active == True:
+                if y_cath:
+                    bar_plot(df_filter, y_option)
+
+                if y_cath == False:
+                    bnsy = st.slider('Select number of bins', 1, 50, 10, key=1)
+                    histogram_plot(df_filter,y_option,bnsy)
+
+            #activate c2 plot 
+            if x_active and y_active:
+
+                if x_cath and y_cath:
+                    cont_heatmap(df_filter, x_option, y_option)
+
+                if not x_cath and not y_cath:
+                    cont_heatmap(df_filter, x_option, y_option)
+                
+                if (x_cath and not y_cath) or (y_cath and not x_cath):
+                    box_plot(df_filter, x_option, y_option)
+                
         update = False

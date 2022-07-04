@@ -73,7 +73,7 @@ def app():
         update = True
 
 
-    c1, c2= st.columns([1, 3])
+    c1, c2= st.columns([1, 4])
     #column 1 config
     c1.write('### Date select')
     initial_date = c1.date_input('Start date', datetime.date(2021, 11, 1))
