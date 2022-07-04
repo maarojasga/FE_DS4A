@@ -20,6 +20,12 @@ def app():
 
     def read_data():
         df = pd.read_csv('data/Labeled Metatabla.csv')
+        del df["eventID"]
+        del df['GrupoBiolo']
+        del df['Presión sonora 1']
+        del df['Presión sonora 2']
+        del df['Presión sonora 3']
+        del df['Presión sonora 4']
         df['date'] = pd.to_datetime(df['date'])
         return df
 
@@ -160,7 +166,6 @@ def app():
     df = read_data()
 
     key_list = [
-        'eventID',
         'sensor_name',
         'date2',
         'hour',
@@ -169,11 +174,6 @@ def app():
         'grand_label',
         'label_desc',
         'Cobertura',
-        'GrupoBiolo',
-        'Presión sonora 1',
-        'Presión sonora 2',
-        'Presión sonora 3',
-        'Presión sonora 4',
         'min_f',
         'max_f',
         'min_t',
@@ -190,14 +190,12 @@ def app():
     ]
 
     cath_keys = [
-        'eventID',
         'sensor_name',
         'date2',
         'hour',
         'grand_label',
         'label_desc',
-        'Cobertura',
-        'GrupoBiolo',
+        'Cobertura'
         ] #Categorical variables columns
 
     cont_keys = [key for key in key_list if key not in cath_keys]#Cont variables columns

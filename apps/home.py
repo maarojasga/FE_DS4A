@@ -22,17 +22,12 @@ from apps.classification import preprocessing_audio, classification
 def app():
     plt.style.use('default')
 
-    st.write(
-        """
-        # Acoustic biodiversity monitoring
-        #
-        """
-    )
+    st.markdown(f'<h1 style="color:#347E81;">{"Acoustic biodiversity monitoring"}</h1>', unsafe_allow_html=True)
     image = Image.open('images/amazonia-1.jpg')
     st.image(image, caption='Amazonas')
 
-
-    st.write("## Upload your track to analyze")
+    st.markdown(f'<h1 style="color:#347E81;font-size:30px">{"Upload your track to analyze"}</h1>', unsafe_allow_html=True)
+    
     uploaded_file = st.file_uploader("Select file",type=["wav"])
     
     if uploaded_file is not None:
@@ -52,7 +47,7 @@ def app():
         df_indices_file = compute_acoustic_indices(s, Sxx, tn, fn)
 
         st.audio(audio_bytes, format='audio/mp3')
-        st.write("Spectogram:")
+        st.markdown(f'<p style="color:black;font-size:16px">{"Spectogram:"}</p>', unsafe_allow_html=True)
         # Side Bar #######################################################
         y, sr = handle_uploaded_audio_file(uploaded_file)
         col1, col2, col3 = st.columns([1,1,1])
@@ -100,9 +95,11 @@ def app():
                                         ["Spectral cover (SC)",np.nan],
                                         ["Number of peaks (NP): measure of the average number of peaks in the spectra of the frames through a recording",np.nan],
                                         ],columns=dfIndex.columns, index=dfIndex.index)
-            """dfIndexplot= dfIndex.style\
-                        .set_tooltips(ttips,props="visibility:hidden; position:absolute; background-color: #DEF3FE;font-size:12px; padding: 10px; border-radius: 7px;z-index:1;")\
-                        .set_table_styles([{'selector': 'th','props': [('background-color', '#add8e6')]}])\
+            dfIndexplot= dfIndex.style\
+                        .set_tooltips(ttips,props="visibility:hidden; position:absolute; background-color: #DEF3FE;font-size:12px; padding: 10px; border-radius: 7px;z-index:1;color:black")\
+                        .set_table_styles([{'selector': 'th','props': [('background-color', '#193A50')]}])\
+                        .set_properties(**{'background-color': '#56B5BA','color': 'white'})\
+                        .format({"Value":"{:.2f}"})\
                         .hide_index()\
                         .to_html()
 
@@ -111,11 +108,11 @@ def app():
             df_xlsx = to_excel(dfIndex)
             st.download_button(label='📥 Download Indices',
                                 data=df_xlsx ,
-                                file_name= 'Acoustic Indices.xlsx')"""
+                                file_name= 'Acoustic Indices.xlsx')
             
 
-        st.subheader('Classification of Audio')
-        st.markdown('In this section we are going to detect the presence or absence of soundscape components')
+        st.markdown(f'<h1 style="color:#347E81;font-size:30px">{"Classification of Audio"}</h1>', unsafe_allow_html=True)
+        st.markdown(f'<p style="color:black">{"In this section we are going to detect the presence or absence of soundscape components"}</p>', unsafe_allow_html=True)
 
         if st.button('Detect Rain'):
             with st.spinner('Executing classifcation...'):
@@ -167,12 +164,14 @@ def plot_transformation(y, sr, transformation_name,colours):
     fig, ax = plt.subplots(figsize=(7,4))
     img = librosa.display.specshow(S_db, x_axis="time", y_axis="linear", ax=ax,cmap=colours)
     fig.colorbar(img, ax=ax, format="%+2.f dB")
-
+    fig.patch.set_facecolor('#F2F2F2')
     return plt.gcf()
 
 def plot_wave(y, sr):
     fig, ax = plt.subplots(figsize=(7,4))
     img = librosa.display.waveshow(y, sr=sr, x_axis="time", ax=ax)
+    fig.patch.set_facecolor('#F2F2F2')
+    ax.set_facecolor('#F2F2F2')
     return plt.gcf()
 
 def compute_acoustic_indices(s, Sxx, tn, fn):
