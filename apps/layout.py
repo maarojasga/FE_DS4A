@@ -33,12 +33,17 @@ def app():
         df['date'] = pd.to_datetime(df['date'])
         return df
 
+    #Filter options
+
+    #By parent label
     def filter_parent_label(df, tipo):
         update()
         if tipo == 'All': return df
         else:
             df_filter = df[df['grand_label'] == tipo]
             return df_filter
+
+    #By date
 
     def filter_date(df, initial_date, final_date):
         update()
@@ -50,6 +55,7 @@ def app():
         
         return df_filter
     
+    #By hour
     def filter_hour(df, start_hr, end_hr):
         update()
 
@@ -58,14 +64,6 @@ def app():
 
         return df_filter
 
-    def group_data(df, group_option, agg = 'size'):
-        if group_option:
-            df_gb = df.groupby(group_option)
-            df_g = df_gb.aggregate(agg)
-            df_g = pd.DataFrame(df_g)
-            return df_g
-        
-        else: return df
 
     def update():
         update = True
@@ -206,15 +204,23 @@ def app():
     #set columns
     c1, c2, c3 = st.columns([1, 2, 2])
 
+
+
     #column 1 config
+    
+    #x-y axis input options:
+
+    key_list1 = ['None'] + key_list
+
     c1.write('### Set Variables')
     x_option = c1.selectbox(
         'Horizontal axis:',
-        ['None'] + key_list
+        key_list1
     )
+
     y_option = c1.selectbox(
         'Vertical axis:',
-        ['None'] + key_list
+        key_list1
     )
 
 
@@ -233,6 +239,8 @@ def app():
     
 
     if update:
+
+
 
         df_filter = df.copy()
 
@@ -261,7 +269,7 @@ def app():
         else: x_active = False
 
 
-        if y_option != 'None':
+        if (y_option != 'None') and (y_option != x_option):
             if y_option in cath_keys:
                 y_active = True
                 y_cath = True
@@ -272,6 +280,7 @@ def app():
 
             else:
                 y_cath == nan
+
         else: y_active = False
 
         with c2:
