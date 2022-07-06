@@ -46,9 +46,30 @@ def preprocessing_audio(y, sr):
 
 def classification(instace):
 
-    model_file = "apps/models/rain_gbrt_20220703.pkl"
-    classifier = load(model_file)
-    result = classifier.predict(instace)
-    return result
+    model_file_rain = "apps/models/Rain_gbrt_20220703.pkl"
+    classifier_rain = load(model_file_rain)
+    result_rain = classifier_rain.predict(instace)
 
+    model_file_insects = "apps/models/Insects_gbrt_20220703.pkl"
+    classifier_insects = load(model_file_insects)
+    result_insects = classifier_insects.predict(instace)
+
+    model_file_birds = "apps/models/Birds_gbrt_20220703.pkl"
+    classifier_birds = load(model_file_birds)
+    result_birds = classifier_birds.predict(instace)
+
+    model_file_anthro = "apps/models/Anthrophony_gbrt_20220703.pkl"
+    classifier_anthro = load(model_file_anthro)
+    result_anthro = classifier_anthro.predict(instace)
+
+    if result_rain == 1:
+        return 'Geophony: Rain 🌧️ 🌧️ 🌧️ 🌧️'
+    elif result_insects == 1:
+        return 'Biophony: Insects 🦗 🐜 🦗 🐛'
+    elif result_birds == 1:
+        return 'Biophony: Birds 🦜 🐦 🦜 🐦 '
+    elif result_anthro == 1:
+        return 'Anthropophony: 🛵  🛩️  🛵  🛩️'
+    else:
+        return 'Sound not detected ❌ 😖 ❌ 😖'
 
