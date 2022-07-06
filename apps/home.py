@@ -29,7 +29,7 @@ def app():
         """
     )
     image = Image.open('images/amazonia-1.jpg')
-    st.image(image, caption='Amazonas')
+    st.image(image, caption='Magdalena Medio')
 
 
     st.write("## Upload your track to analyze")
@@ -52,17 +52,18 @@ def app():
         df_indices_file = compute_acoustic_indices(s, Sxx, tn, fn)
 
         st.audio(audio_bytes, format='audio/mp3')
-        st.write("Spectogram:")
+        #st.write("Spectogram:")
         # Side Bar #######################################################
         y, sr = handle_uploaded_audio_file(uploaded_file)
-        col1, col2, col3 = st.columns([1,1,1])
+        # col1, col2, col3 = st.columns([1,1,1])
+        col1, col2 = st.columns([1,1])
         with col1:
             st.markdown(
-            f"<h4 style='text-align: left; '>Original</h5>",
+            f"<h4 style='text-align: left; '>Spectogram</h5>",
             unsafe_allow_html=True,
         )
             buf = BytesIO()
-            plot_transformation(y, sr, "Original",colours).savefig(buf, format="png")
+            plot_transformation(y, sr, "Spectrogram",colours).savefig(buf, format="png")
             st.image(buf)
 
             #st.pyplot(plot_transformation(y, sr, "Original"))
@@ -77,16 +78,14 @@ def app():
             st.image(buf)
             #st.pyplot(plot_wave(y, sr))
 
-        with col3:
 
-            st.markdown(
+        st.markdown(
             f"<h4 style='text-align: left; '>Acoustic Indices</h5>",
             unsafe_allow_html=True,
         )   
-            dfIndex=df_indices_file.reset_index()
-            #dfIndex=dfIndex.style.format({"Value":"{:.2f}"})
-
-            ttips=pd.DataFrame(data=[["Acoustic Diversity Index (ADI): Increases with greater evenness across frequency bands.",
+        dfIndex=df_indices_file.reset_index()
+        #dfIndex=dfIndex.style.format({"Value":"{:.2f}"})
+        ttips=pd.DataFrame(data=[["Acoustic Diversity Index (ADI): Increases with greater evenness across frequency bands.",
                                         "Highest values were from recordings with high levels of geophony or anthrophony (wind, helicopters or trucks)"],
                                         ["Acoustic Complexity Index (ACI): Measure the difference in amplitude between one time sample and the next within a frequency band, relative to the total amplitude within that band.",
                                         "High values indicate storms, intermittent rain drops falling from vegetation, stridulating insects, or high levels of bird activity."],
@@ -100,41 +99,28 @@ def app():
                                         ["Spectral cover (SC)",np.nan],
                                         ["Number of peaks (NP): measure of the average number of peaks in the spectra of the frames through a recording",np.nan],
                                         ],columns=dfIndex.columns, index=dfIndex.index)
-            dfIndexplot= dfIndex.style\
+        dfIndexplot= dfIndex.style\
                         .set_tooltips(ttips,props="visibility:hidden; position:absolute; background-color: #DEF3FE;font-size:12px; padding: 10px; border-radius: 7px;z-index:1;")\
                         .set_table_styles([{'selector': 'th','props': [('background-color', '#add8e6')]}])\
                         .format({"Value":"{:.2f}"})\
                         .hide_index()\
                         .to_html()
 
-            #st.dataframe(dfIndexplot)
-            st.markdown(dfIndexplot,unsafe_allow_html=True)
-            df_xlsx = to_excel(dfIndex)
-            st.download_button(label='📥 Download Indices',
+        st.markdown(dfIndexplot,unsafe_allow_html=True)
+        df_xlsx = to_excel(dfIndex)
+        st.download_button(label='📥 Download Indices',
                                 data=df_xlsx ,
                                 file_name= 'Acoustic Indices.xlsx')
             
 
-        st.subheader('Classification of Audio')
-        st.markdown('In this section we are going to detect the presence or absence of soundscape components')
+        st.subheader('Classification of Audio 🔉')
+        st.markdown('In this section we are going to detect the most prominent component of soundscape')
 
-        if st.button('Detect Rain'):
-            with st.spinner('Executing classifcation...'):
-
-                st.info("Extracting features...")
-
+        if st.button('Detect'):
+            with st.spinner('Executing classification...'):
                 features = preprocessing_audio(y, sr)
-
-
-                st.info("Classifying presence or absence")
-
                 result = classification(features)
-                if result ==0:
-                    st.success('Result: Audio with rain absence')
-                else:
-                    st.success('Result: Audio with rain presence')  
-
-                st.success('Classifcation executed successfully')
+                st.success('Classifcation executed - Result: '+result)
                 st.balloons()
 
 def to_excel(df):
@@ -214,7 +200,7 @@ def compute_acoustic_indices(s, Sxx, tn, fn):
     H = Hf * Ht
     BI = features.bioacoustics_index(Sxx, fn, flim=(2000, 11000))
     NP = features.number_of_peaks(Sxx_power, fn, mode='linear', min_peak_val=0, 
-                                  min_freq_dist=100, slopes=None, prominence=1e-6)
+                                min_freq_dist=100, slopes=None, prominence=1e-6)
     SC, _, _ = features.spectral_cover(Sxx_dB, fn, dB_threshold=-50, flim_LF=(1000,20000))
     
     # Structure data into a pandas series

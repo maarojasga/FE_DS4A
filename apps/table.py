@@ -80,11 +80,11 @@ def app():
 
 
     #column 2 config
-    c2.write('### Biophonic group')
+    c2.write('### Soundscape Category')
     tipo = c2.radio( 'Type', ['All']+list(set(df['grand_label'])))
 
     #column 3 config
-    c3.write('### Vew as')
+    c3.write('### View as')
 
     key_list = [
         'sensor_name',
