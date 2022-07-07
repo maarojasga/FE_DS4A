@@ -63,13 +63,13 @@ def classification(instace):
     result_anthro = classifier_anthro.predict(instace)
 
     if result_rain == 1:
-        return 'Geophony: Rain 🌧️ 🌧️ 🌧️ 🌧️'
+        return 'Geophony -->  Rain 🌧️ 🌧️ 🌧️ 🌧️'
     elif result_insects == 1:
-        return 'Biophony: Insects 🦗 🐜 🦗 🐛'
+        return 'Biophony --> Insects 🦗 🐜 🦗 🐛'
     elif result_birds == 1:
-        return 'Biophony: Birds 🦜 🐦 🦜 🐦 '
+        return 'Biophony -->  Birds 🦜 🐦 🦜 🐦 '
     elif result_anthro == 1:
-        return 'Anthropophony: 🛵  🛩️  🛵  🛩️'
+        return 'Anthropophony -->  🛵  🛩️  🛵  🛩️'
     else:
         return 'Sound not detected ❌ 😖 ❌ 😖'
 

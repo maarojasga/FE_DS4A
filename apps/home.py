@@ -28,7 +28,8 @@ def app():
         #
         """
     )
-    image = Image.open('images/amazonia-1.jpg')
+    #st.markdown("<h2 style='text-align: center; color: black;'>Smaller headline in black </h2>", unsafe_allow_html=True)
+    image = Image.open('images/magdalena 3.jpeg')
     st.image(image, caption='Magdalena Medio')
 
 
@@ -55,8 +56,8 @@ def app():
         #st.write("Spectogram:")
         # Side Bar #######################################################
         y, sr = handle_uploaded_audio_file(uploaded_file)
-        # col1, col2, col3 = st.columns([1,1,1])
-        col1, col2 = st.columns([1,1])
+        col1, col2, col3 = st.columns([1,1,1])
+        #col1, col2 = st.columns([1,1])
         with col1:
             st.markdown(
             f"<h4 style='text-align: left; '>Spectogram</h5>",
@@ -77,40 +78,40 @@ def app():
             plot_wave(y, sr).savefig(buf, format="png")
             st.image(buf)
             #st.pyplot(plot_wave(y, sr))
+        
+        with col3:
+            st.markdown(
+                f"<h4 style='text-align: left; '>Acoustic Indices</h5>",
+                unsafe_allow_html=True,
+            )   
+            dfIndex=df_indices_file.reset_index()
+            #dfIndex=dfIndex.style.format({"Value":"{:.2f}"})
+            ttips=pd.DataFrame(data=[["Acoustic Diversity Index (ADI): Increases with greater evenness across frequency bands.",
+                                            "Highest values were from recordings with high levels of geophony or anthrophony (wind, helicopters or trucks)"],
+                                            ["Acoustic Complexity Index (ACI): Measure the difference in amplitude between one time sample and the next within a frequency band, relative to the total amplitude within that band.",
+                                            "High values indicate storms, intermittent rain drops falling from vegetation, stridulating insects, or high levels of bird activity."],
+                                            ["Normalized Difference Soundscape Index (NDSI): Relies on a theoretical frequency split between anthrophony (1–2 kHz) and biophony (2–11 kHz).",
+                                            "High values reflect high levels of insect biophony"],
+                                            ["Bioacoustic Index (BI): higher values indicate greater disparity between loudest and quietest bands.",
+                                            "Highest values produced by blanket cicada noise,Low values arise when there is no sound between 2 and 11 kHz."],
+                                            ["Frecuency entropy (Hf): a measure of acoustic energy dispersal through the spectrum","Heavy rain produces a high H[s] value"], #https://stackoverflow.com/questions/30418391/what-is-frequency-domain-entropy-in-fft-result-and-how-to-calculate-it
+                                            ["Temporal entropy (Ht): The squared amplitude values of the wave envelope normalized to unit area and treated as a probability mass function (pmf)",np.nan],
+                                            ["Acoustic entropy (H): Increases with greater evenness of amplitude among frequency bands and/or time steps.","Highest values come from near‐silent recordings, lowest values produced when insect noise dominated a single frequency band."],
+                                            ["Spectral cover (SC)",np.nan],
+                                            ["Number of peaks (NP): measure of the average number of peaks in the spectra of the frames through a recording",np.nan],
+                                            ],columns=dfIndex.columns, index=dfIndex.index)
+            dfIndexplot= dfIndex.style\
+                            .set_tooltips(ttips,props="visibility:hidden; position:absolute; background-color: #DEF3FE;font-size:12px; padding: 10px; border-radius: 7px;z-index:1;")\
+                            .set_table_styles([{'selector': 'th','props': [('background-color', '#add8e6')]}])\
+                            .format({"Value":"{:.2f}"})\
+                            .hide_index()\
+                            .to_html()
 
-
-        st.markdown(
-            f"<h4 style='text-align: left; '>Acoustic Indices</h5>",
-            unsafe_allow_html=True,
-        )   
-        dfIndex=df_indices_file.reset_index()
-        #dfIndex=dfIndex.style.format({"Value":"{:.2f}"})
-        ttips=pd.DataFrame(data=[["Acoustic Diversity Index (ADI): Increases with greater evenness across frequency bands.",
-                                        "Highest values were from recordings with high levels of geophony or anthrophony (wind, helicopters or trucks)"],
-                                        ["Acoustic Complexity Index (ACI): Measure the difference in amplitude between one time sample and the next within a frequency band, relative to the total amplitude within that band.",
-                                        "High values indicate storms, intermittent rain drops falling from vegetation, stridulating insects, or high levels of bird activity."],
-                                        ["Normalized Difference Soundscape Index (NDSI): Relies on a theoretical frequency split between anthrophony (1–2 kHz) and biophony (2–11 kHz).",
-                                        "High values reflect high levels of insect biophony"],
-                                        ["Bioacoustic Index (BI): higher values indicate greater disparity between loudest and quietest bands.",
-                                        "Highest values produced by blanket cicada noise,Low values arise when there is no sound between 2 and 11 kHz."],
-                                        ["Frecuency entropy (Hf): a measure of acoustic energy dispersal through the spectrum","Heavy rain produces a high H[s] value"], #https://stackoverflow.com/questions/30418391/what-is-frequency-domain-entropy-in-fft-result-and-how-to-calculate-it
-                                        ["Temporal entropy (Ht): The squared amplitude values of the wave envelope normalized to unit area and treated as a probability mass function (pmf)",np.nan],
-                                        ["Acoustic entropy (H): Increases with greater evenness of amplitude among frequency bands and/or time steps.","Highest values come from near‐silent recordings, lowest values produced when insect noise dominated a single frequency band."],
-                                        ["Spectral cover (SC)",np.nan],
-                                        ["Number of peaks (NP): measure of the average number of peaks in the spectra of the frames through a recording",np.nan],
-                                        ],columns=dfIndex.columns, index=dfIndex.index)
-        dfIndexplot= dfIndex.style\
-                        .set_tooltips(ttips,props="visibility:hidden; position:absolute; background-color: #DEF3FE;font-size:12px; padding: 10px; border-radius: 7px;z-index:1;")\
-                        .set_table_styles([{'selector': 'th','props': [('background-color', '#add8e6')]}])\
-                        .format({"Value":"{:.2f}"})\
-                        .hide_index()\
-                        .to_html()
-
-        st.markdown(dfIndexplot,unsafe_allow_html=True)
-        df_xlsx = to_excel(dfIndex)
-        st.download_button(label='📥 Download Indices',
-                                data=df_xlsx ,
-                                file_name= 'Acoustic Indices.xlsx')
+            st.markdown(dfIndexplot,unsafe_allow_html=True)
+            df_xlsx = to_excel(dfIndex)
+            st.download_button(label='📥 Download Indices',
+                                    data=df_xlsx ,
+                                    file_name= 'Acoustic Indices.xlsx')
             
 
         st.subheader('Classification of Audio 🔉')
