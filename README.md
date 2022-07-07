@@ -56,3 +56,22 @@ To ensure correct operation, we recommend creating a virtual environment and ins
 4. Run: conda activate project_name
 5. Install requirements: pip install -r requirements
 
+Run application by using: streamlit run app.py.
+
+# Web-app
+ Web application has 4 principal sections:
+ 
+ ## 1. Home:
+ Here you can see do a minimal test of of the proposed algorithms:
+ 
+ ![image](https://user-images.githubusercontent.com/99512774/177885346-4ded7892-ee84-45aa-a982-bd020c21a692.png)
+ 
+ You can upload a .wav file and see the spectrogram and calculated acoustic indices of uploaded record.
+ 
+ ![image](https://user-images.githubusercontent.com/99512774/177886705-b4631102-1199-42f4-a624-6b5ccb65c176.png)
+
+ Finally, by using *Detect* button the algorithm identifies if there is rain presence or absence:
+ 
+ ![image](https://user-images.githubusercontent.com/99512774/177887034-03082c13-e82f-4eb9-a548-db6602f25998.png)
+
+ 
