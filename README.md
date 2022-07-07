@@ -27,8 +27,10 @@ As stated in advance, the web application was deployed using Streamlit. The clas
 
 ## Cloning this repo
 
-1. Copy the url prensented in this repo:
+1. Copy the url prensented in this repo (Highlighted in blue):
+
  ![image](https://user-images.githubusercontent.com/99512774/177884173-8ef1becf-e662-4794-9028-c64fc2bb59b4.png)
+ 
 2. Open a terminal
 3. Go to preferred directory path
 4. Run: git clone <project-url> where <project-url> is the url you copy on step 1.
