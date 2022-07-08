@@ -5,6 +5,8 @@ The human ecological footprint has had a tremendous effect on the environment an
 
 As stated in advance, the web application was deployed using Streamlit. The classification algorithms use scikit-maad. Another relevant libraries are pandas and librosa. A full list with required libraries is presented in the requirements.txt file present in this repo.
 
+Check the demo in this link http://34.69.89.160:8080/
+
 # Install and run
 
 ## Cloning this repo
