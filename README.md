@@ -62,12 +62,24 @@ Run application by using: streamlit run app.py.
  
  The web-tool presents data recolected and provided by Humboldt institute. Main fields are:
  
- 1. sensor_name: A code that identifies each sensor use to recolect data.
- 2. fname: Name of .wav file
- 3. date: the date in which the recordings were made. 
- 4. time: the hour of recording.
- 5. decimalLon and decimalLat: Latitude and longitude of sensor.
- 6. label: describes if record has sounds of 
+ 1. **sensor_name:** A code that identifies each sensor use to recolect data.
+ 2. **fname:** Name of .wav file
+ 3. **date:** the date in which the recordings were made. 
+ 4. **time:** the hour of recording.
+ 5. **decimalLon and decimalLat:** Latitude and longitude of sensor.
+ 6. **label:** describes if record has sounds of Bat, Insect, Rain, Pulse, Herpetus, anthrophony, Birds, Motor, Indeterminate, Steps, Water Flow, domesticated animals or if sound is saturated.
+ 7. **grand_label:** Classifies type of sounds into 4 categories: Other, biophony, geophony, anthrophony
+ 8. **ecosystem:** Describes type of ecosystem in which recordings were made: palm, grassland, riparian forest, grasses, dense forest, open forest
+ 9. **Acoustic indices:** Nine indices that help us to characterize the properties of the signal, they are used to describe some aspect of the spectral and temporal diversity or complexity of sounds presented in .wav files: <br /> 
+    **a) ADI:** (Acoustic Diversity Index) Increases with greater evenness across frequency bands. Highest values were from recordings with high levels of geophony or anthrophony (wind, helicopters or trucks)<br />
+    **b) ACI:** (Acoustic Complexity Index) Measure the difference in amplitude between one time sample and the next within a frequency band, relative to the total amplitude within that band. High values indicate storms, intermittent rain drops falling from vegetation, stridulating insects, or high levels of bird activity. <br />
+    **c) NDSI:** (Normalized Difference Soundscape Index): Relies on a theoretical frequency split between anthrophony (1–2 kHz) and biophony (2–11 kHz). High values reflect high levels of insect biophony <br />
+    **d) BI:** (Bioacoustic Index) higher values indicate greater disparity between loudest and quietest bands. Highest values produced by blanket cicada noise, Low values arise when there is no sound between 2 and 11 kHz. <br />
+    **e) Hf:** (Frecuency entropy) a measure of acoustic energy dispersal through the spectrum, heavy rain produces a high values. <br />
+    **f) Ht:** (Temporal entropy) The squared amplitude values of the wave envelope normalized to unit area and treated as a probability mass function (pmf) <br />
+    **g) H:** (Acoustic entropy) Increases with greater evenness of amplitude among frequency bands and/or time steps. Highest values come from near‐silent recordings, lowest values produced when insect noise dominated a single frequency band. <br />
+    **h) SC:** (Spectral cover) <br />
+    **i) NP:** (Number of peaks) measure of the average number of peaks in the spectra of the frames through a recording.     <br />
  
 # Web-app
  Web application has 4 principal sections:
