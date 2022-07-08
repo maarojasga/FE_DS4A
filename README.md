@@ -95,10 +95,12 @@ Run application by using: streamlit run app.py.
  <img src="https://user-images.githubusercontent.com/99512774/177885346-4ded7892-ee84-45aa-a982-bd020c21a692.png" width=50% height=50%>
   </p>
  You can upload a .wav file and see the spectrogram and calculated acoustic indices of uploaded record.
+ 
  <p align="center">
  <img src="https://user-images.githubusercontent.com/99512774/177886705-b4631102-1199-42f4-a624-6b5ccb65c176.png" width=50% height=50%>
  </p>
  Finally, by using *Detect* button the algorithm identifies if there is rain presence or absence:
+ 
  <p align="center">
 <img src="https://user-images.githubusercontent.com/99512774/177887034-03082c13-e82f-4eb9-a548-db6602f25998.png" width=50% height=50%>
  </p>
