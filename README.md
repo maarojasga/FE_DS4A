@@ -58,8 +58,9 @@ To ensure correct operation, we recommend creating a virtual environment and ins
 
 Run application by using: streamlit run app.py.
 
- #About Tadular Data
- 
+# Data
+
+## Tabular data
  The web-tool presents data recolected and provided by Humboldt institute. Main fields are:
  
  1. **sensor_name:** A code that identifies each sensor use to recolect data.
@@ -80,6 +81,9 @@ Run application by using: streamlit run app.py.
     **g) H:** (Acoustic entropy) Increases with greater evenness of amplitude among frequency bands and/or time steps. Highest values come from near‐silent recordings, lowest values produced when insect noise dominated a single frequency band. <br />
     **h) SC:** (Spectral cover) <br />
     **i) NP:** (Number of peaks) measure of the average number of peaks in the spectra of the frames through a recording.     <br />
+
+## Recordings
+ All recordings analized are available in: https://www.dropbox.com/sh/9hm5grr21jjppm2/AAAjQLdqOUxqVCx00Ir2-ZXxa?dl=0
  
 # Web-app
  Web application has 4 principal sections:
