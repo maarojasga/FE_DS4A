@@ -72,40 +72,35 @@ Run application by using: streamlit run app.py.
  Web application has 4 principal sections:
  
  ## Home:
- Here you can see do a minimal test of of the proposed algorithms:
- 
+ Here you can see do a minimal test of of the proposed algorithms:<br /><br />
  <p align="center">
  <img src="https://user-images.githubusercontent.com/99512774/177885346-4ded7892-ee84-45aa-a982-bd020c21a692.png" width=50% height=50%>
   </p>
- You can upload a .wav file and see the spectrogram and calculated acoustic indices of uploaded record.
- 
+ You can upload a .wav file and see the spectrogram and calculated acoustic indices of uploaded record.<br /><br />
  <p align="center">
  <img src="https://user-images.githubusercontent.com/99512774/177886705-b4631102-1199-42f4-a624-6b5ccb65c176.png" width=50% height=50%>
  </p>
- Finally, by using *Detect* button the algorithm identifies if there is rain presence or absence:
- 
+ Finally, by using *Detect* button the algorithm identifies if there is rain presence or absence:<br /><br />
  <p align="center">
 <img src="https://user-images.githubusercontent.com/99512774/177887034-03082c13-e82f-4eb9-a548-db6602f25998.png" width=50% height=50%>
  </p>
 
  ## Maps:
  
- Here you can see a map indicating the site where recording were made. You can filter by Category of classified recordings:
-
+ Here you can see a map indicating the site where recording were made. You can filter by Category of classified recordings:<br /><br />
 <p align="center">
 <img src="https://user-images.githubusercontent.com/99512774/177888392-3e38ea52-30c9-4ff0-bb89-8fb38f3dd111.png" width=50% height=50%>
  </p>
  
  ## Table:
  
- A 2d table visual of data recolected by recording, such as latitude and longitude, sensor type, date and grand label (Biophony, anthrophony, geophony etc) You can select a column to see data grouped using the controls.
+ A 2d table visual of data recolected by recording, such as latitude and longitude, sensor type, date and grand label (Biophony, anthrophony, geophony etc) You can select a column to see data grouped using the controls.<br /><br />
  <p align="center">
 <img src="https://user-images.githubusercontent.com/99512774/177889282-17bab976-5463-476b-9d14-b331e5a0dc86.png" width=50% height=50%>
  </p>
  
  ## Layout:
- A tool to visualize data presented filtered by date and Category. the graphs present are according to the type of data that is being ploted
- 
+ A tool to visualize data presented filtered by date and Category. the graphs present are according to the type of data that is being ploted. <br /><br />
  <p align="center">
 <img src="https://user-images.githubusercontent.com/99512774/177889559-51006598-4ed5-4203-b588-3801c02fefab.png" width=50% height=50%>
  </p>
