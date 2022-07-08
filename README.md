@@ -66,6 +66,7 @@ Run application by using: streamlit run app.py.
 
 ## Recordings
  All recordings analized are available in: https://www.dropbox.com/sh/9hm5grr21jjppm2/AAAjQLdqOUxqVCx00Ir2-ZXxa?dl=0
+ Some recordings to test this application are available in audio_test folder in this repo.
  
 # Web-app
  Web application has 4 principal sections:
