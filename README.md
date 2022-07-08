@@ -15,14 +15,14 @@ As stated in advance, the web application was deployed using Streamlit. The clas
  
 2. Open a terminal
 3. Go to preferred directory path
-4. Run: git clone <project-url> where <project-url> is the url you copy on step 1.
+4. Run: git clone *project-url* where *project-url* is the url you copy on step 1.
 
 
 ## Creating a virtual environment and install requirements
 
 To ensure correct operation, we recommend creating a virtual environment and installing the necessary libraries present in the requirements.txt file. We present two ways to do it
 
-### Using menv:
+### Using venv:
 
 1. Open a terminal 
 2. Go to preferred directory path 
